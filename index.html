@@ -277,6 +277,30 @@ h3,.h-lead{font-family:var(--serif);font-size:var(--t-lead);font-weight:400;line
 .foot-end{display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px 32px;padding:0 var(--m) calc(28px + env(safe-area-inset-bottom));font-size:var(--t-small)}
 .foot-end a{text-underline-offset:3px}
 
+/* Barra de rolagem: o arco da marca, com as seções marcadas no trilho */
+.sb{display:none;position:fixed;top:calc(var(--bar) + 10px);bottom:10px;right:0;width:26px;z-index:50;user-select:none;-webkit-user-select:none}
+.sb,.sb-t,.sb-m{--c:var(--wine);--k:var(--pearl)}
+.sb-t.dark,.sb-m.dark{--c:var(--pearl);--k:var(--wine)}
+.sb-t{position:absolute;top:0;right:6px;z-index:2;width:6px;height:var(--h,80px);border-radius:var(--arch);background:var(--c);opacity:.6;transform:translateY(var(--y,0));cursor:grab;transition:width .28s var(--expo),opacity .3s ease,background-color .35s ease}
+.sb.on .sb-t{width:8px;opacity:1}
+.sb:hover .sb-t,.sb.drag .sb-t{width:16px;opacity:1}
+.sb.drag .sb-t{cursor:grabbing}
+.sb-t::after{content:"";position:absolute;left:50%;top:50%;width:10px;height:10px;margin:-5px 0 0 -5px;background:var(--k);clip-path:path("M5 0Q5.6 4.4 10 5Q5.6 5.6 5 10Q4.4 5.6 0 5Q4.4 4.4 5 0Z");opacity:0;transform:scale(.4) rotate(-45deg);transition:opacity .2s ease,transform .4s var(--expo)}
+.sb:hover .sb-t::after,.sb.drag .sb-t::after{opacity:1;transform:none}
+.sb-m{position:absolute;top:0;right:8px;width:8px;height:9px;margin-top:-4px;border-radius:4px 4px 0 0;background:var(--c);opacity:0;transform:translateY(var(--y,0));cursor:pointer;transition:opacity .25s ease,background-color .35s ease}
+.sb-m::before{content:"";position:absolute;inset:-7px -8px}
+.sb-m::after{content:attr(data-l);display:none;position:absolute;right:calc(100% + 12px);top:50%;transform:translateY(-50%);padding:7px 16px 5px;border-radius:17px 17px 0 0;background:var(--c);color:var(--k);font:500 var(--t-small)/1.3 var(--sans);white-space:nowrap}
+.sb.on .sb-m{opacity:.4}
+.sb:hover .sb-m,.sb.drag .sb-m{opacity:.75}
+.sb .sb-m:hover{opacity:1}
+.sb-m:hover::after{display:block}
+@media (hover:hover) and (pointer:fine){
+  .js{scrollbar-width:none}
+  .js::-webkit-scrollbar{display:none}
+  .js .sb{display:block}
+  .js .menu-open .sb,.js .sb.none{display:none}
+}
+
 /* WhatsApp flutuante */
 .wa{position:fixed;right:var(--m);bottom:calc(var(--m) + env(safe-area-inset-bottom));z-index:40;width:60px;height:68px;border-radius:30px 30px 0 0;background:var(--wine);color:var(--pearl);display:grid;place-items:center;box-shadow:0 14px 30px -10px rgba(43,22,20,.55); /* taste-skill-ignore: flutua sobre a pagina */
 opacity:0;visibility:hidden;transform:translateY(16px);transition:transform .3s var(--ease),opacity .3s ease,visibility 0s .3s}
@@ -374,7 +398,7 @@ opacity:0;visibility:hidden;transform:translateY(16px);transition:transform .3s 
   *,*::before,*::after{animation:none!important;transition-duration:.01ms!important}
   .shot{transition:none}
 }
-@media print{.bar,.menu,.wa,.frieze{display:none}.split{display:block}.stage{position:static;height:auto}}
+@media print{.bar,.menu,.wa,.frieze,.sb{display:none}.split{display:block}.stage{position:static;height:auto}}
 </style>
 </head>
 <body>
@@ -643,6 +667,8 @@ opacity:0;visibility:hidden;transform:translateY(16px);transition:transform .3s 
   </div>
 </footer>
 
+<div class="sb" id="sb" aria-hidden="true"><i class="sb-t" id="sbT"></i></div>
+
 <a class="wa" id="wa" href="https://wa.me/5585900000000?text=Ol%C3%A1%20Ivna!%20Gostaria%20de%20agendar%20uma%20consulta." target="_blank" rel="noopener" aria-label="Falar com Ivna no WhatsApp"><svg aria-hidden="true"><use href="#i-wa"/></svg></a>
 
 <script>
@@ -746,6 +772,82 @@ opacity:0;visibility:hidden;transform:translateY(16px);transition:transform .3s 
     const tick = () => { if (!on) { on = true; requestAnimationFrame(draw); } };
     addEventListener('scroll', tick, { passive: true });
     addEventListener('resize', tick, { passive: true });
+  }
+
+  // Barra de rolagem própria, só com mouse (no toque fica a do sistema).
+  // A rolagem continua nativa: roda do mouse, teclado e leitor de tela seguem iguais.
+  if (matchMedia('(hover:hover) and (pointer:fine)').matches) {
+    const sb = $('#sb'), thumb = $('#sbT'), root = document.documentElement;
+    const zones = [['.split', 1], ['#mesa', 0], ['#vida-real', 1], ['#sobre', 0], ['#metodo', 0], ['.field.a1', 0], ['.field.a2', 1], ['#duvidas', 0], ['#agendar', 1], ['.foot', 0]]
+      .map(([s, dark]) => ({ el: $(s), dark, top: 0, bot: 0 }));
+    const marks = [['Pilares', '#pilares'], ['Sobre', '#sobre'], ['Método', '#metodo'], ['Atendimento', '#atendimento'], ['Dúvidas', '#duvidas'], ['Agendar', '#agendar']].map(([label, sel]) => {
+      const dot = document.createElement('i');
+      dot.className = 'sb-m';
+      dot.dataset.l = label;
+      sb.append(dot);
+      const m = { dot, el: $(sel), y: 0 };
+      dot.addEventListener('click', () => m.el.scrollIntoView({ behavior: calm ? 'auto' : 'smooth' }));
+      return m;
+    });
+    let max = 0, rail = 0, h = 0, railTop = 0, queued = false, idle;
+    const measure = () => {
+      const page = scrollY;
+      max = root.scrollHeight - innerHeight;
+      sb.classList.toggle('none', max <= 0);
+      rail = sb.clientHeight;
+      railTop = sb.getBoundingClientRect().top;
+      h = Math.max(56, Math.min(rail * .5, innerHeight / root.scrollHeight * rail));
+      thumb.style.setProperty('--h', h + 'px');
+      zones.forEach(z => { const r = z.el.getBoundingClientRect(); z.top = r.top + page; z.bot = r.bottom + page; });
+      const pad = parseFloat(getComputedStyle(root).scrollPaddingTop) || 0;
+      marks.forEach(m => {
+        const top = m.el.getBoundingClientRect().top + page - pad;
+        m.y = Math.round(Math.min(1, top / max) * (rail - h));
+        m.dot.style.setProperty('--y', m.y + 'px');
+      });
+    };
+    const darkAt = y => zones.reduce((d, z) => (y >= z.top && y < z.bot ? !!z.dark : d), false);
+    const paint = () => {
+      queued = false;
+      const page = scrollY, y = max > 0 ? page / max * (rail - h) : 0;
+      thumb.style.setProperty('--y', y + 'px');
+      thumb.classList.toggle('dark', darkAt(page + railTop + y + h / 2));
+      marks.forEach(m => m.dot.classList.toggle('dark', darkAt(page + railTop + m.y)));
+    };
+    const queue = () => { if (!queued) { queued = true; requestAnimationFrame(paint); } };
+    addEventListener('scroll', () => {
+      sb.classList.add('on');
+      clearTimeout(idle);
+      idle = setTimeout(() => sb.classList.remove('on'), 1200);
+      queue();
+    }, { passive: true });
+    new ResizeObserver(() => { measure(); queue(); }).observe(document.body);
+    addEventListener('resize', () => { measure(); queue(); }, { passive: true });
+
+    // Arrastar o arco ou clicar no trilho
+    let startY = 0, startPage = 0;
+    thumb.addEventListener('pointerdown', e => {
+      if (e.button) return;
+      e.preventDefault();
+      thumb.setPointerCapture(e.pointerId);
+      startY = e.clientY;
+      startPage = scrollY;
+      sb.classList.add('drag');
+    });
+    thumb.addEventListener('pointermove', e => {
+      if (!sb.classList.contains('drag')) return;
+      scrollTo({ top: startPage + (e.clientY - startY) * max / (rail - h), behavior: 'instant' });
+    });
+    const drop = () => sb.classList.remove('drag');
+    thumb.addEventListener('pointerup', drop);
+    thumb.addEventListener('pointercancel', drop);
+    sb.addEventListener('pointerdown', e => {
+      if (e.target !== sb || e.button) return;
+      e.preventDefault();
+      scrollTo({ top: (e.clientY - railTop - h / 2) / (rail - h) * max, behavior: calm ? 'auto' : 'smooth' });
+    });
+    measure();
+    paint();
   }
 
   $('#yr').textContent = new Date().getFullYear();
