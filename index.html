@@ -127,7 +127,6 @@ h3,.h-lead{font-family:var(--serif);font-size:var(--t-lead);font-weight:400;line
 .shot{position:absolute;inset:0;background:var(--pearl);opacity:0;transition:opacity 1.6s ease}
 .shot.is-on{opacity:1}
 .shot img{width:100%;height:100%;object-fit:contain;padding:13% 12% 9%}
-.shot figcaption{position:absolute;left:0;right:0;bottom:22px;text-align:center;color:var(--wine);font-size:var(--t-small)}
 .shot.photo{background:var(--wine-2)}
 .shot.photo img{height:110%;margin-top:-5%;padding:0;object-fit:cover;object-position:50% 74%;will-change:transform}
 .flow{min-width:0;grid-column:1;grid-row:1}
@@ -160,7 +159,6 @@ h3,.h-lead{font-family:var(--serif);font-size:var(--t-lead);font-weight:400;line
 .frieze li{width:clamp(186px,23vw,360px);flex:none}
 .frieze .a{aspect-ratio:4/5;border-radius:var(--arch);overflow:hidden;background:var(--pearl);padding:17% 10% 8%}
 .frieze img{width:100%;height:100%;object-fit:contain}
-.frieze figcaption{margin-top:10px;font-size:var(--t-small)}
 
 /* A vida real */
 .vida{background:var(--chive);color:var(--pearl)}
@@ -278,7 +276,6 @@ h3,.h-lead{font-family:var(--serif);font-size:var(--t-lead);font-weight:400;line
 .foot-col p{max-width:40ch}
 .foot-end{display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px 32px;padding:0 var(--m) calc(28px + env(safe-area-inset-bottom));font-size:var(--t-small)}
 .foot-end a{text-underline-offset:3px}
-.foot-end .credit{max-width:70ch}
 
 /* WhatsApp flutuante */
 .wa{position:fixed;right:var(--m);bottom:calc(var(--m) + env(safe-area-inset-bottom));z-index:40;width:60px;height:68px;border-radius:30px 30px 0 0;background:var(--wine);color:var(--pearl);display:grid;place-items:center;box-shadow:0 14px 30px -10px rgba(43,22,20,.55); /* taste-skill-ignore: flutua sobre a pagina */
@@ -317,7 +314,6 @@ opacity:0;visibility:hidden;transform:translateY(16px);transition:transform .3s 
   .frieze{padding-inline:var(--m)}
   .frieze ul{display:grid;grid-template-columns:repeat(4,1fr);gap:clamp(8px,2vw,16px);width:auto;padding:0}
   .frieze li{width:auto}
-  .frieze figcaption{font-size:.875rem;margin-top:6px}
   .vida-tabs,.vida-panels{grid-column:1/-1}
   .about{padding:32px 20px 0}
   .about h2,.about .pic,.about-tx{grid-column:1/-1;grid-row:auto}
@@ -442,7 +438,7 @@ opacity:0;visibility:hidden;transform:translateY(16px);transition:transform .3s 
           <img src="img/ivna/hero-1024.webp" width="1024" height="1536" alt="Ivna Aguiar, de jaleco, sorrindo à mesa do consultório, com frutas, livros de nutrição e uma fita métrica" fetchpriority="high" decoding="async" data-drift="y" data-amt="5">
         </picture>
       </div>
-      <template id="plates"><figure class="shot" data-shot="graviola" aria-hidden="true"><picture><source type="image/avif" srcset="img/plates/graviola-760.avif"><img src="img/plates/graviola-760.webp" width="760" height="920" alt="" loading="lazy" decoding="async"></picture><figcaption>Graviola</figcaption></figure><figure class="shot" data-shot="caju" aria-hidden="true"><picture><source type="image/avif" srcset="img/plates/caju-760.avif"><img src="img/plates/caju-760.webp" width="760" height="1144" alt="" loading="lazy" decoding="async"></picture><figcaption>Caju</figcaption></figure><figure class="shot" data-shot="coco" aria-hidden="true"><picture><source type="image/avif" srcset="img/plates/coco-760.avif"><img src="img/plates/coco-760.webp" width="760" height="947" alt="" loading="lazy" decoding="async"></picture><figcaption>Coco</figcaption></figure><figure class="shot" data-shot="maracuja" aria-hidden="true"><picture><source type="image/avif" srcset="img/plates/maracuja-760.avif"><img src="img/plates/maracuja-760.webp" width="760" height="1196" alt="" loading="lazy" decoding="async"></picture><figcaption>Maracujá</figcaption></figure></template>
+      <template id="plates"><figure class="shot" data-shot="graviola" aria-hidden="true"><picture><source type="image/avif" srcset="img/plates/graviola-760.avif"><img src="img/plates/graviola-760.webp" width="760" height="920" alt="" loading="lazy" decoding="async"></picture></figure><figure class="shot" data-shot="caju" aria-hidden="true"><picture><source type="image/avif" srcset="img/plates/caju-760.avif"><img src="img/plates/caju-760.webp" width="760" height="1144" alt="" loading="lazy" decoding="async"></picture></figure><figure class="shot" data-shot="coco" aria-hidden="true"><picture><source type="image/avif" srcset="img/plates/coco-760.avif"><img src="img/plates/coco-760.webp" width="760" height="947" alt="" loading="lazy" decoding="async"></picture></figure><figure class="shot" data-shot="maracuja" aria-hidden="true"><picture><source type="image/avif" srcset="img/plates/maracuja-760.avif"><img src="img/plates/maracuja-760.webp" width="760" height="1196" alt="" loading="lazy" decoding="async"></picture></figure></template>
     </div>
   </figure>
 
@@ -494,7 +490,7 @@ opacity:0;visibility:hidden;transform:translateY(16px);transition:transform .3s 
   </div>
   <div class="frieze" aria-label="Gravuras de frutas da mesa cearense">
     <ul id="frieze" data-drift="frieze">
-      <li class="rv" style="--d:0ms"><figure><div class="a"><picture><source type="image/avif" srcset="img/plates/caju-360.avif"><img src="img/plates/caju-360.webp" width="360" height="542" alt="Gravura de caju" loading="lazy" decoding="async"></picture></div><figcaption>Caju</figcaption></figure></li><li class="rv" style="--d:60ms"><figure><div class="a"><picture><source type="image/avif" srcset="img/plates/coco-360.avif"><img src="img/plates/coco-360.webp" width="360" height="449" alt="Gravura de coco" loading="lazy" decoding="async"></picture></div><figcaption>Coco</figcaption></figure></li><li class="rv" style="--d:120ms"><figure><div class="a"><picture><source type="image/avif" srcset="img/plates/graviola-360.avif"><img src="img/plates/graviola-360.webp" width="360" height="436" alt="Gravura de graviola" loading="lazy" decoding="async"></picture></div><figcaption>Graviola</figcaption></figure></li><li class="rv" style="--d:180ms"><figure><div class="a"><picture><source type="image/avif" srcset="img/plates/maracuja-360.avif"><img src="img/plates/maracuja-360.webp" width="360" height="566" alt="Gravura de maracujá" loading="lazy" decoding="async"></picture></div><figcaption>Maracujá</figcaption></figure></li><li class="rv" style="--d:240ms"><figure><div class="a"><picture><source type="image/avif" srcset="img/plates/banana-360.avif"><img src="img/plates/banana-360.webp" width="360" height="487" alt="Gravura de banana" loading="lazy" decoding="async"></picture></div><figcaption>Banana</figcaption></figure></li><li class="rv" style="--d:300ms"><figure><div class="a"><picture><source type="image/avif" srcset="img/plates/goiaba-360.avif"><img src="img/plates/goiaba-360.webp" width="360" height="503" alt="Gravura de goiaba" loading="lazy" decoding="async"></picture></div><figcaption>Goiaba</figcaption></figure></li><li class="rv" style="--d:360ms"><figure><div class="a"><picture><source type="image/avif" srcset="img/plates/tamarindo-360.avif"><img src="img/plates/tamarindo-360.webp" width="360" height="450" alt="Gravura de tamarindo" loading="lazy" decoding="async"></picture></div><figcaption>Tamarindo</figcaption></figure></li><li class="rv" style="--d:420ms"><figure><div class="a"><picture><source type="image/avif" srcset="img/plates/limao-360.avif"><img src="img/plates/limao-360.webp" width="360" height="459" alt="Gravura de limão" loading="lazy" decoding="async"></picture></div><figcaption>Limão</figcaption></figure></li>
+      <li class="rv" style="--d:0ms"><figure><div class="a"><picture><source type="image/avif" srcset="img/plates/caju-360.avif"><img src="img/plates/caju-360.webp" width="360" height="542" alt="Gravura de caju" loading="lazy" decoding="async"></picture></div></figure></li><li class="rv" style="--d:60ms"><figure><div class="a"><picture><source type="image/avif" srcset="img/plates/coco-360.avif"><img src="img/plates/coco-360.webp" width="360" height="449" alt="Gravura de coco" loading="lazy" decoding="async"></picture></div></figure></li><li class="rv" style="--d:120ms"><figure><div class="a"><picture><source type="image/avif" srcset="img/plates/graviola-360.avif"><img src="img/plates/graviola-360.webp" width="360" height="436" alt="Gravura de graviola" loading="lazy" decoding="async"></picture></div></figure></li><li class="rv" style="--d:180ms"><figure><div class="a"><picture><source type="image/avif" srcset="img/plates/maracuja-360.avif"><img src="img/plates/maracuja-360.webp" width="360" height="566" alt="Gravura de maracujá" loading="lazy" decoding="async"></picture></div></figure></li><li class="rv" style="--d:240ms"><figure><div class="a"><picture><source type="image/avif" srcset="img/plates/banana-360.avif"><img src="img/plates/banana-360.webp" width="360" height="487" alt="Gravura de banana" loading="lazy" decoding="async"></picture></div></figure></li><li class="rv" style="--d:300ms"><figure><div class="a"><picture><source type="image/avif" srcset="img/plates/goiaba-360.avif"><img src="img/plates/goiaba-360.webp" width="360" height="503" alt="Gravura de goiaba" loading="lazy" decoding="async"></picture></div></figure></li><li class="rv" style="--d:360ms"><figure><div class="a"><picture><source type="image/avif" srcset="img/plates/tamarindo-360.avif"><img src="img/plates/tamarindo-360.webp" width="360" height="450" alt="Gravura de tamarindo" loading="lazy" decoding="async"></picture></div></figure></li><li class="rv" style="--d:420ms"><figure><div class="a"><picture><source type="image/avif" srcset="img/plates/limao-360.avif"><img src="img/plates/limao-360.webp" width="360" height="459" alt="Gravura de limão" loading="lazy" decoding="async"></picture></div></figure></li>
     </ul>
   </div>
 </section>
@@ -644,7 +640,6 @@ opacity:0;visibility:hidden;transform:translateY(16px);transition:transform .3s 
   </div>
   <div class="foot-end">
     <span>© <span id="yr">2026</span> Ivna Aguiar · Nutricionista · CRN 00000 · CE</span>
-    <span class="credit">Gravuras botânicas: Francisco Manuel Blanco, <em>Flora de Filipinas</em> (1880–1883), domínio público, via <a href="https://commons.wikimedia.org/wiki/Category:Flora_de_Filipinas" target="_blank" rel="noopener">Wikimedia Commons</a>.</span>
   </div>
 </footer>
 
